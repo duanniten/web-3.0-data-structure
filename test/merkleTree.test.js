@@ -7,17 +7,34 @@ class MerkleTree {
         return this.makeTree(this.leaves)
     }
 
-    getProof() {
-
+    getProof(index) {
+        this.proof = []
+        this.makeTree(this.leaves, index)
+        console.log(this.proof)
+        return this.proof
     }
 
-    makeTree(leaves) {
-
+    makeTree(leaves, index = false) {
         if (leaves.length == 1) {
             return leaves[0];
         }
         let new_leaves = []
         for (var i = 0; i < leaves.length; i += 2) {
+            if (i === index) {
+                index = new_leaves.length
+                this.proof.push({
+                    data: leaves[i + 1],
+                    left: false
+                },)
+            }
+            else if (i + 1 == index) {
+                index = new_leaves.length
+                this.proof.push({
+                    data: leaves[i],
+                    left: true
+                },)
+            }
+
             const left = leaves[i]
             const right = leaves[i + 1]
             if (!right) {
