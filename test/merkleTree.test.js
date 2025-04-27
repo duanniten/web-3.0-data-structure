@@ -14,23 +14,26 @@ class MerkleTree {
         return this.proof
     }
 
-    makeTree(leaves, index = false) {
+    makeTree(leaves, index = false, not_hashed = leaves) {
         if (leaves.length == 1) {
             return leaves[0];
         }
         let new_leaves = []
+        let new_not_hashed = []
         for (var i = 0; i < leaves.length; i += 2) {
+
             if (i === index) {
                 index = new_leaves.length
+                
                 this.proof.push({
-                    data: leaves[i + 1],
+                    data: not_hashed[i + 1],
                     left: false
                 },)
             }
             else if (i + 1 == index) {
                 index = new_leaves.length
                 this.proof.push({
-                    data: leaves[i],
+                    data: not_hashed[i],
                     left: true
                 },)
             }
@@ -39,13 +42,15 @@ class MerkleTree {
             const right = leaves[i + 1]
             if (!right) {
                 new_leaves.push(left)
+                new_not_hashed.push(left)
             }
             else {
                 new_leaves.push(this.concat(left, right))
+                new_not_hashed.push(left+right)
             }
 
         }
-        return this.makeTree(new_leaves)
+        return this.makeTree(new_leaves, index, new_not_hashed)
     }
 }
 
@@ -83,6 +88,6 @@ describe('merkle', function () {
             { data: 'E', left: false }
         ]
 
-        expect(merkleTree.getProof(index)).toBe(expect_proof)
+        expect(merkleTree.getProof(index)).toStrictEqual(expect_proof)
     })
 });
