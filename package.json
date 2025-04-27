@@ -1,0 +1,28 @@
+{
+  "name": "estudo-web-3.0",
+  "version": "1.0.0",
+  "description": "Test on WEB 3.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "duanniten"
+  },
+  "keywords": [
+    "web",
+    "3.0",
+    "account",
+    "javascript",
+    "utxo"
+  ],
+  "author": "duann",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
